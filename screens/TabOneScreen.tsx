@@ -20,7 +20,7 @@ export default function TabOneScreen({
       <EditScreenInfo path="/screens/TabOneScreen.tsx" />
       <Button
         title="Click to go to Flutter module"
-        onPress={() => Flutter.navigateTo('hello')}
+        onPress={() => Flutter.navigateTo('/my-second-route')}
       />
     </View>
   );

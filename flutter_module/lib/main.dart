@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'rn_method_channel.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -19,7 +21,33 @@ class MyApp extends StatelessWidget {
         // counter didn't reset back to zero; the application is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      onGenerateRoute: (RouteSettings settings) {
+        Widget child = MyHomePage(title: 'Flutter Demo Home Page');
+
+        if (settings.name == '/my-second-route') {
+          child = MySecondPage();
+        }
+        return MaterialPageRoute(builder: (BuildContext context) => child);
+      },
+    );
+  }
+}
+
+class MySecondPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Second Page"),
+      ),
+      body: Center(
+        child: RaisedButton(
+          child: Text("Go back"),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
     );
   }
 }
@@ -97,6 +125,9 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            TextButton(
+                onPressed: () => RnMethodChannel.navigate('route'),
+                child: Text('enter react page')),
           ],
         ),
       ),

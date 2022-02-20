@@ -1,6 +1,5 @@
 package com.example.myapp.channel;
 
-import android.app.Activity;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
@@ -9,6 +8,11 @@ import com.example.myapp.MainFlutterActivity;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+
+import java.util.Objects;
+
+import io.flutter.embedding.android.FlutterActivity;
+import io.flutter.embedding.engine.FlutterEngineCache;
 
 public class ReactNativeFlutterBridgeChannel extends ReactContextBaseJavaModule {
 
@@ -24,11 +28,14 @@ public class ReactNativeFlutterBridgeChannel extends ReactContextBaseJavaModule 
 
     @ReactMethod
     public void navigateTo(String screen) {
-        final Activity activity = getReactApplicationContext().getCurrentActivity();
-        final Intent intent = new Intent(activity, MainFlutterActivity.class);
-        intent.putExtra("flutterScreen", screen);
-        if (activity != null) {
-            activity.startActivity(intent);
-        }
+        final Intent intent =
+                FlutterActivity
+                        .withCachedEngine("my_engine_id")
+                        .build(Objects.requireNonNull(getCurrentActivity()));
+        intent.setClass(getCurrentActivity(), MainFlutterActivity.class);
+        intent.setAction("push_a_route");
+        intent.putExtra("navigate_to", screen);
+        getCurrentActivity().startActivity(intent);
+        getCurrentActivity().overridePendingTransition(0,0);
     }
 }

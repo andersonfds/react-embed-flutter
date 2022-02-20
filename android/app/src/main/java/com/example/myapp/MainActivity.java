@@ -8,15 +8,30 @@ import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 
 import expo.modules.ReactActivityDelegateWrapper;
+import io.flutter.embedding.engine.FlutterEngine;
+import io.flutter.embedding.engine.FlutterEngineCache;
+import io.flutter.embedding.engine.dart.DartExecutor;
+import io.flutter.embedding.engine.loader.FlutterLoader;
+import io.flutter.view.FlutterMain;
 
 public class MainActivity extends ReactActivity {
+  public FlutterEngine engine;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    // Set the theme to AppTheme BEFORE onCreate to support 
+    // Set the theme to AppTheme BEFORE onCreate to support
     // coloring the background, status bar, and navigation bar.
     // This is required for expo-splash-screen.
     setTheme(R.style.AppTheme);
     super.onCreate(null);
+    final FlutterLoader loader = new FlutterLoader();
+
+    loader.startInitialization(this);
+    loader.ensureInitializationComplete(this, null);
+
+    engine = new FlutterEngine(this);
+    engine.getDartExecutor().executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault());
+    FlutterEngineCache.getInstance().put("my_engine_id", engine);
   }
 
   /**
