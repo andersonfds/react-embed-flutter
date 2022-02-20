@@ -7,6 +7,6 @@ This project is a mixture of Flutter and React Native.
 - Then added Flutter
 - Then made a simple communication system between the two apps.
 
-> **Note:** Currently works only on Android, I'm working on iOS. I think I might do a medium article describing how to make this.
+> **Note:** Currently works only on Android, I'm gonna make it work on iOS ASAP. I think I might do a medium article describing how to make this.
 
 ![Example](docs/demo.gif "Example")
